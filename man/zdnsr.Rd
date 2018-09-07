@@ -4,9 +4,16 @@
 \name{zdnsr}
 \alias{zdnsr}
 \alias{zdnsr-package}
-\title{...}
+\title{Perform Bulk 'DNS' Queries Using 'zdns'}
 \description{
+Provides wrapper/helper methods for executing 'zdns'
+(\url{https://github.com/zmap/zdns}) bulk queries along with utility methods to
+retrieve and cache 'Public DNS' (\url{http://public-dns.info/}) nameserver lists.
+}
+\details{
 \itemize{
+\item \code{zdns}: \url{https://github.com/zmap/zdns}
+\item \code{Public DNS Lists}: \url{http://public-dns.info/}
 \item URL: \url{https://gitlab.com/hrbrmstr/zdnsr}
 \item BugReports: \url{https://gitlab.com/hrbrmstr/zdnsr/issues}
 }

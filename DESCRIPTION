@@ -1,6 +1,6 @@
 Package: zdnsr
 Type: Package
-Title: zdnsr title goes here otherwise CRAN checks fail
+Title: Perform Bulk 'DNS' Queries Using 'zdns'
 Version: 0.1.0
 Date: 2018-09-07
 Authors@R: c(
@@ -8,7 +8,10 @@ Authors@R: c(
            comment = c(ORCID = "0000-0001-5670-2640"))
   )
 Maintainer: Bob Rudis <bob@rud.is>
-Description: A good description goes here otherwise CRAN checks fail.
+Description: Provides wrapper/helper methods for executing 'zdns' 
+    (<https://github.com/zmap/zdns>) bulk queries along with utility methods
+    to retrieve and cache 'Public DNS' (<http://public-dns.info/>) nameserver
+    lists.
 URL: https://gitlab.com/hrbrmstr/zdnsr
 BugReports: https://gitlab.com/hrbrmstr/zdnsr/issues
 Encoding: UTF-8
@@ -19,6 +22,6 @@ Suggests:
 Depends:
     R (>= 3.2.0)
 Imports:
-    httr,
-    jsonlite
+    jsonlite,
+    magrittr
 RoxygenNote: 6.0.1.9000
