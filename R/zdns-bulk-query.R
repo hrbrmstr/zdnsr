@@ -32,12 +32,52 @@
 #' @note if you specified `TRUE` for `log` then _you_ are responsible for
 #'       removing the auto-generated log file.
 #' @export
+#' @examples \dontrun{
+#' # enumerate top prefixes for a domain
+#'
+#' c(
+#'   "www", "mail", "mx", "blog", "ns1", "ns2", "dev", "server", "email",
+#'   "cloud", "api", "support", "smtp", "app", "webmail", "test", "box",
+#'   "m", "admin", "forum", "news", "web", "mail2", "ns", "demo", "my",
+#'   "portal", "shop", "host", "cdn", "git", "vps", "mx1", "mail1",
+#'   "static", "help", "ns3", "beta", "chat", "secure", "staging", "vpn",
+#'   "apps", "server1", "ftp", "crm", "new", "wiki",  "home", "info"
+#' ) -> top_common_prefixes
+#'
+#' tf <- tempfile(fileext = ".json")
+#'
+#' zdns_query(
+#'   sprintf("%s.rstudio.com", top_common_prefixes),
+#'   query_type = "A",
+#'   num_nameservers = (length(top_common_prefixes) * 2),
+#'   output_file = tf
+#' )
+#'
+#' res <- jsonlite::stream_in(file(tf))
+#'
+#' found <- which(lengths(res$data$answers) > 0)
+#'
+#' do.call(
+#'   rbind.data.frame,
+#'   lapply(found, function(idx) {
+#'     res$data$answers[[idx]]$query_name <- res$name[idx]
+#'     res$data$answers[[idx]]
+#'   })
+#' ) -> xdf
+#'
+#' xdf <- xdf[,c("query_name", "name", "class", "ttl", "type", "answer")]
+#'
+#' knitr::kable(xdf)
+#' }
 zdns_query <- function(entities, input_file = NULL, query_type = "A", output_file,
                        num_nameservers = 3000L, num_retries = 3,
                        log = TRUE, verbose = 3) {
 
-  # setup entities to lookup
+  # make sure the output file dir exists
+  output_file <- path.expand(output_file)
+  stopifnot(dir.exists(dirname(output_file)))
 
+  # setup entities to lookup
   if (!is.null(input_file)) {
     input_file <- path.expand(input_file)
     if (!file.exists(input_file)) stop("input file not found", call.=FALSE)
