@@ -5,7 +5,8 @@
 \title{Bulk query using zdns}
 \usage{
 zdns_query(entities, input_file = NULL, query_type = "A", output_file,
-  num_nameservers = 3000L, num_retries = 3, log = TRUE, verbose = 3)
+  num_nameservers = 3000L, num_retries = 3, num_threads = 500,
+  log = TRUE, verbose = 3)
 }
 \arguments{
 \item{entities}{a character vector of entities to resolve}
@@ -28,6 +29,9 @@ recommended that you refresh this list periodicaly (perhaps daily).}
 
 \item{num_retries}{how many times should \code{zdns} retry query if timeout or
 temporary failure? Defaults to \code{3}.}
+
+\item{num_threads}{number of lightweight go threads. Note that the default \code{500} is
+smaller than the built-in default of \code{1000}.}
 
 \item{log}{if \code{TRUE} the JSON error log file will be automatically generated and
 the location printed to the console. If a length 1 character vector, this

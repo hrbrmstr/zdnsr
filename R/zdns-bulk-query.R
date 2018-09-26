@@ -20,6 +20,8 @@
 #'        recommended that you refresh this list periodicaly (perhaps daily).
 #' @param num_retries how many times should `zdns` retry query if timeout or
 #'        temporary failure? Defaults to `3`.
+#' @param num_threads number of lightweight go threads. Note that the default `500` is
+#'        smaller than the built-in default of `1000`.
 #' @param log if `TRUE` the JSON error log file will be automatically generated and
 #'        the location printed to the console. If a length 1 character vector, this
 #'        path + file will be used to save the JSON error log. If `FALSE` no error
@@ -70,7 +72,7 @@
 #' knitr::kable(xdf)
 #' }
 zdns_query <- function(entities, input_file = NULL, query_type = "A", output_file,
-                       num_nameservers = 3000L, num_retries = 3,
+                       num_nameservers = 3000L, num_retries = 3, num_threads = 500,
                        log = TRUE, verbose = 3) {
 
   # make sure the output file dir exists
@@ -130,6 +132,7 @@ zdns_query <- function(entities, input_file = NULL, query_type = "A", output_fil
     "-conf-file", ns_file,
     "-output-file", output_file,
     "-retries", num_retries,
+    "-threads", num_threads,
     "-verbosity", verbose
   )
 
