@@ -15,6 +15,14 @@ zdns_exec <- function(args=c(), stdout="", stdin="") {
 
   zdns_bin <- Sys.which("zdns")
 
+  if (zdns_bin == "") {
+    message("zdns binary not on PATH. Trying to find it at ~/go/bin...")
+    zdns_bin <- path.expand("~/go/bin/zdns")
+    if (!file.exists(zdns_bin)) {
+      stop("zdns binary not found.", call.=FALSE)
+    }
+  }
+
   res <- system2(zdns_bin, args=args, stdout=stdout, stdin=stdin)
 
   invisible(res)
